@@ -1,0 +1,125 @@
+Techno :
+    - Sql : SQL serveur
+    - FrontEnd : Angular
+    - BackEnd : node.js
+
+# ===============================================================================================================
+
+Interface :
+    - Tableau avec filtrage par date (Dashboard) :
+        + Lot 
+        + Nmb d'Akoho 
+        + Achat (0 si eclot) 
+        + Sakafo (prix de sa bouffe depuis sa naissance ; S0 = 0 car première semaine il ne se nourrit pas) 
+        + Maty (Nmb de mort inserer dans un autre interface) 
+        + Poids Moyen par Akoho (en fonction des semaines influencées par la date de filtrage ; S0 = poids de naissance uniquement) 
+        + Prix de vente du lot (PU * Poids moyen * Nmb d'akoho)
+        + Nmb Atody (Nmb d'atody inserer dans un autre interface - eclot - lamokany)
+        + Prix des atody (PU * Nmb d'atody)
+        + Benefice (Prix de vente - Achat - Sakafo)
+
+    - Interface d'insertion de maty (MortAkoho) :
+        + Lot (selectionner le lot)
+        + Nmb de maty
+        + Date de l'insertion
+
+    - Interface d'insertion d'atody (Atody) :
+        + Lot (selectionner le lot)
+        + Nmb d'atody
+        + Date de l'insertion
+        + type (eclot, lamokany, normal)
+
+Base :
+
+    - Race :
+        + idRace 
+        + Race
+        + Prix par g de sakafo
+        + Prix par g de sa race
+        + PU d'atody
+        + [ Exemple ] :
+            - | 1 | R1 | 150 | 3500 | 700 |
+            - | 2 | R2 | 200 | 1000 | 500 |
+            - ...
+
+    - Sakafo :
+        + idSakafo
+        + Semaine
+        + idRace
+        + Poids
+        + Sakafo quantite par g
+        + [ Exemple ] :
+            - | 1 | S0 | 1 | 150 | 0 | (première semaine : ne se nourrit pas) 
+            - | 2 | S1 | 1 | 30 | 60| (après 1 semaine, ajout du poids et nourriture)
+            - ...
+
+    - Lot :
+        + id
+        + date
+        + Nmb de Akoho 
+        + Achat
+        + idRace
+        + Age
+        + [ Exemple ] :
+            - | 1 | 2026-01-01 | 100 | 5000 | 1 | S2 |
+            - | 2 | 2026-01-09 | 20 | 0 | 1 | S3 | (achat = 0 car lot d’éclot)
+            - ...
+
+    - AkohoMaty :
+        + idAkoho
+        + idLot
+        + Nmb d'akoho maty
+        + Date de l'insertion
+        + [ Exemple ] :
+            - | 1 | 1 | 10 | 2026-01-15 |
+            - | 2 | 1 | 5 | 2026-01-20 |
+            - ...
+        
+    - Atody :
+        + idAtody
+        + idLot
+        + Nmb d'atody
+        + Date de l'insertion
+        + Type (eclot, lamokany, normal)
+        + [ Exemple ] :
+            - | 1 | 1 | 200 | 2026-01-15 | normal |
+            - | 2 | 1 | 50 | 2026-01-20 | eclot |
+            - | 3 | 1 | 50 | 2026-02-05 | lamokany |
+            - ...
+        
+Traitement :
+    - [DashBoard (Nmb Akoho)] : 
+        + Nmb Akoho = Nmb de Akoho du lot - Nmb de maty du lot (% a la date de filtrage > date insertion AkohoMaty)
+    - [DashBoard (Achat)] :
+        + Achat = Achat du lot (depuis Lot)
+    - [DashBoard (Sakafo)] :
+        * nombre de jour de vie (date de filtrage - date dans le lot) = duree
+        * dure = quotient * 7 + reste
+        + Sakafo = Prix /g de sakafo de sa race * Sakafo quantite par g * ((somme de S1 à q semaine + r*(q+1)/7) * NmbAkoho)
+            - (S0 = 0 car première semaine, ne consomme pas)
+    - [Dashboard (mort)]:
+        + nmbMort = somme NmbAkohoMaty (% influence dateFiltrage)
+    - [Dashboard (Poids Moyen par Akoho)]:
+        * nombre de jour de vie (date de filtrage - date dans le lot) = duree
+        * reste = duree % 7; quotient = (duree - reste) / 7; dure = quotient * 7 + reste
+        + poidMoyen = somme Poids S0 (poids naissance) + somme Poids S1 → q + r*(q+1)/7
+            - (S0 = poids naissance uniquement, pas de nourriture)
+    - [Dashboard (Prix de vente du lot)]:
+        + prixLot = poidMoyen * prix/g (Race) * (NmbAkoho - nmbMort)
+    - [Dashboard (Nmb Atody)] :
+        + nmbAtody = somme Atody normal - (eclot + lamokany)
+    - [Dashboard (Prix des Atody)]:
+        + prixAtody = PU_atody * nmbAtody
+    - [Dashboard (Bénéfice)]:
+        + benefice = prixAtody + prixLot - (Achat + Sakafo)
+    - [Atody (type : eclot)] :
+        + création d’un nouveau lot :
+            - même Race que lot parent
+            - NmbAkoho = Nmb atody éclot
+            - Achat = 0
+            - date = date insertion de l’Atody éclot
+            - Age = S0
+    - [Dashboard (filtrage par date)] :
+        + au début (pas de date de filtrage) : tout s’affiche avec état actuel ; Age dans Lot = semaine dans Sakafo
+        + le filtrage par date influence tous les champs dépendants de la date (NmbAkoho, NmbMort, Poids Moyen, Prix de vente, Nmb Atody, Prix des Atody)
+        + seuls les lots dont Lot.date <= dateFiltrage sont affichés

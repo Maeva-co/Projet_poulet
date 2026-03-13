@@ -1,0 +1,56 @@
+NODE.JS : 
+    -cd backend
+    node server.js
+    
+    - curl http://localhost:3000/dashboard
+    - curl http://localhost:3000/dashboard?date=2026-03-07
+
+    - curl -X POST http://localhost:3000/mort \
+        -H "Content-Type: application/json" \
+        -d '{
+                "idLot": 1,
+                "nmbMort": 5,
+                "dateMort": "2026-03-07"
+            }'
+    
+    - curl -X POST http://localhost:3000/atody \
+        -H "Content-Type: application/json" \
+        -d '{
+                "idLot": 1,
+                "nmbAtody": 50,
+                "dateAtody": "2026-03-07",
+                "type": "eclot"
+            }'
+
+# Dashboard complet
+curl http://localhost:3000/dashboard
+
+# Dashboard filtré par date
+curl http://localhost:3000/dashboard?date=2026-03-07
+
+# Ajouter mort
+curl -X POST http://localhost:3000/mort \
+  -H "Content-Type: application/json" \
+  -d '{"idLot":1,"nmbMaty":5,"dateInsertion":"2026-03-07"}'
+
+# Ajouter atody normal
+curl -X POST http://localhost:3000/atody \
+  -H "Content-Type: application/json" \
+  -d '{"idLot":1,"nmbAtody":100,"dateInsertion":"2026-03-07","type":"normal"}'
+
+# Ajouter atody éclot (crée nouveau lot)
+curl -X POST http://localhost:3000/atody \
+  -H "Content-Type: application/json" \
+  -d '{"idLot":1,"nmbAtody":50,"dateInsertion":"2026-03-07","type":"eclot"}'
+
+# Ajouter atody lamokany
+curl -X POST http://localhost:3000/atody \
+  -H "Content-Type: application/json" \
+  -d '{"idLot":1,"nmbAtody":30,"dateInsertion":"2026-03-07","type":"lamokany"}'
+Angular :
+    - cd frontend
+
+    - ng serve --open 
+
+sqlserver :
+    docker exec -it sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Dev1234! -C

@@ -1,0 +1,170 @@
+# ===============================================================================================================
+# LISTE DE TÂCHES À FAIRE (par étapes)
+# ===============================================================================================================
+
+# 1️⃣ Base de données (SQL Server)
+- Créer tables :
+    + Race
+    + Sakafo
+    + Lot
+    + AkohoMaty
+    + Atody
+- Remplir données exemples pour tester :
+    + Race : prix/g sakafo, prix/g race, PU atody
+    + Sakafo : S0 = 0 (première semaine), S1+ = quantités et poids
+    + Lot : avec achat 0 si éclot
+    + AkohoMaty : quelques morts pour test
+    + Atody : normal, éclot, lamokany
+- Vérifier relations clés étrangères : 
+    + Lot.idRace -> Race.idRace
+    + Sakafo.idRace -> Race.idRace
+    + AkohoMaty.idLot -> Lot.id
+    + Atody.idLot -> Lot.id
+
+# 2️⃣ Backend Node.js
+- Configurer serveur Node.js et connexion à SQL Server
+- Créer routes API pour :
+    + GET Dashboard (lots + calculs)
+    + POST AkohoMaty (insertion morts)
+    + POST Atody (insertion œufs)
+    + POST création lot éclot (après insertion Atody éclot)
+- Implémenter calculs Dashboard côté serveur :
+    + NmbAkoho
+    + Achat
+    + Sakafo (prendre en compte S0 = 0)
+    + Mort
+    + Poids Moyen
+    + Prix de vente du lot
+    + Nmb Atody
+    + Prix des Atody
+    + Bénéfice
+
+# 3️⃣ Frontend Angular
+- Page Dashboard :
+    + Créer tableau affichant tous les champs
+    + Afficher tous les lots au départ (pas de filtre)
+    + Vérifier calculs corrects côté backend
+- Filtrage par date :
+    + Ajouter date picker
+    + Filtrer lots dont Lot.date <= date filtrage
+    + Mettre à jour tous les champs dépendants : NmbAkoho, Mort, Poids moyen, Prix, Atody, Bénéfice
+- Interface insertion AkohoMaty :
+    + Formulaire : Lot, Nmb de morts, Date
+    + Envoyer POST à backend
+    + Mettre à jour Dashboard après insertion
+- Interface insertion Atody :
+    + Formulaire : Lot, Nmb, Date, Type
+    + Envoyer POST à backend
+    + Si type = éclot, créer nouveau lot automatiquement
+    + Mettre à jour Dashboard après insertion
+- Vérifier cohérence des calculs avec S0 = 0
+
+# 4️⃣ Fonctions spécifiques
+- Calcul Sakafo :
+    + Somme des semaines S1 → q (S0 = 0)
+    + Reste jours partiel semaine q+1
+- Calcul Poids Moyen :
+    + S0 = poids naissance
+    + S1 → q + jours restants
+- Calcul Prix de vente :
+    + Poids moyen * prix/g * (NmbAkoho - morts)
+- Calcul Atody :
+    + NmbAtody = normal - (eclot + lamokany)
+    + PrixAtody = PU * NmbAtody
+- Calcul Bénéfice :
+    + benefice = prixlot + prixAtody - (Achat + Sakafo)
+
+# 5️⃣ Tests et validations
+- Vérifier Dashboard sans filtrage
+- Vérifier Dashboard avec filtrage
+- Vérifier insertion morts et mise à jour Dashboard
+- Vérifier insertion Atody normal / éclot / lamokany
+- Vérifier création automatique lot éclot
+- Vérifier cohérence poids moyen, Sakafo, prix, bénéfice
+- Vérifier tous calculs avec S0 = 0 correctement pris en compte
+
+
+#=================================================================
+
+# ===============================================================================================================
+# ROADMAP PROJET AKOHO / ATODY
+# ===============================================================================================================
+
+# 1️⃣ PRIORITÉ HAUTE : Mise en place de la base et backend minimal
+1. Créer la base SQL Server
+   - Créer les tables : Race, Sakafo, Lot, AkohoMaty, Atody
+   - Définir les clés primaires et étrangères
+   - Remplir quelques données exemples pour tests
+
+2. Configurer backend Node.js
+   - Connexion SQL Server
+   - Créer serveur minimal Express
+   - Tester récupération simple de données Lot + Race
+
+# 2️⃣ PRIORITÉ HAUTE : Dashboard sans filtrage
+3. Implémenter API GET Dashboard
+   - Calcul NmbAkoho = Nmb du lot - morts (filtrés par date de la base)
+   - Calcul Achat
+   - Calcul Sakafo (S0 = 0, S1+ normal)
+   - Calcul Mort
+   - Calcul Poids Moyen (S0 = poids naissance)
+   - Calcul Prix de vente
+   - Calcul Nmb Atody (normal - éclot - lamokany)
+   - Calcul Prix des Atody
+   - Calcul Bénéfice
+4. Créer la page Angular Dashboard
+   - Affichage tableau avec tous champs
+   - Consommer API GET Dashboard
+   - Vérifier cohérence des valeurs
+
+# 3️⃣ PRIORITÉ MOYENNE : Filtrage par date
+5. Ajouter date picker sur Dashboard
+   - Filtrer lots : Lot.date <= dateFiltrage
+   - Mettre à jour tous champs dépendants de la date
+   - Tester filtrage correct avec plusieurs lots et dates
+
+# 4️⃣ PRIORITÉ MOYENNE : Insertion de morts (AkohoMaty)
+6. Créer interface Angular pour insertion morts
+   - Formulaire : Lot, Nmb de maty, Date
+   - POST vers backend
+7. Backend : traiter insertion morts
+   - Ajouter en table AkohoMaty
+   - Mettre à jour Dashboard automatiquement après insertion
+8. Tester cas : plusieurs insertions morts, vérifier calcul NmbAkoho, Poids, Prix
+
+# 5️⃣ PRIORITÉ MOYENNE : Insertion d’œufs (Atody)
+9. Créer interface Angular pour insertion Atody
+   - Formulaire : Lot, Nmb, Date, Type (normal / éclot / lamokany)
+   - POST vers backend
+10. Backend : traiter insertion Atody
+    - Ajouter en table Atody
+    - Si type = éclot : créer automatiquement un nouveau lot
+        - NmbAkoho = NmbAtody éclot
+        - Achat = 0
+        - Date = date insertion Atody éclot
+        - Age = S0
+11. Tester insertion Atody normal, éclot, lamokany
+    - Vérifier mise à jour Dashboard et calculs
+
+# 6️⃣ PRIORITÉ MOYENNE : Calculs spéciaux et S0
+12. Vérifier calcul Sakafo :
+    - S0 = 0 (pas de nourriture)
+    - S1+ calcul normal
+13. Vérifier calcul Poids Moyen :
+    - S0 = poids naissance uniquement
+    - S1+ ajout progressif
+14. Vérifier cohérence Prix lot, NmbAtody, PrixAtody, Bénéfice
+
+# 7️⃣ PRIORITÉ FAIBLE : Optimisations et tests finaux
+15. Tester Dashboard complet avec plusieurs lots
+16. Vérifier Dashboard avec filtrage et lots éclots multiples
+17. Ajouter validation formulaire (ex : NmbAkoho > 0, Date <= aujourd’hui)
+18. Ajouter messages d’erreur frontend pour insertion incorrecte
+19. Refactor backend pour éviter doublons dans création lot éclot
+20. Documenter code et préparer scripts SQL pour remplissage initial
+
+# ===============================================================================================================
+# NOTES :
+# - Toujours tester étape par étape : d’abord Dashboard sans filtre, ensuite filtre, puis insertions morts/œufs
+# - S0 = 0 est pris en compte pour Sakafo et Poids Moyen
+# - Tous calculs dépendant de la date doivent être testés après ajout du filtrage
