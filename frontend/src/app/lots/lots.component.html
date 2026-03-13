@@ -1,0 +1,64 @@
+<div class="lots-container">
+  <div class="lots-header">
+    <h2>Gestion des Lots</h2>
+    <p class="subtitle">Créez et consultez vos lots de poulets</p>
+  </div>
+
+  <!-- Tableau des lots -->
+  <div class="lots-table-container">
+    <table *ngIf="lots.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date de Création</th>
+          <th>Nombre de Poulets</th>
+          <th>Coût d'Achat (Ar)</th>
+          <th>Race</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let lot of lots">
+          <td>{{lot.id}}</td>
+          <td>{{lot.dateLot | date:'dd/MM/yyyy'}}</td>
+          <td>{{lot.nmbAkoho}}</td>
+          <td>{{lot.achat}}</td>
+          <td>{{getRaceName(lot.idRace)}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="lots.length === 0" class="no-data">Aucun lot trouvé</p>
+  </div>
+
+  <!-- Formulaire création lot -->
+  <div class="form-container">
+    <h3>Créer un Nouveau Lot</h3>
+    <p class="form-hint">Chaque lot représente un groupe de poulets d'une même race et date</p>
+    
+    <form>
+      <div class="form-group">
+        <label for="lotDate">Date de Création</label>
+        <input type="date" id="lotDate" [(ngModel)]="newLot.dateLot" name="dateLot">
+      </div>
+
+      <div class="form-group">
+        <label for="lotNmb">Nombre de Poulets</label>
+        <input type="number" id="lotNmb" [(ngModel)]="newLot.nmbAkoho" name="nmbAkoho" placeholder="Nombre de poulets au démarrage">
+      </div>
+
+      <div class="form-group">
+        <label for="lotAchat">Coût d'Achat Total (Ariary)</label>
+        <input type="number" id="lotAchat" [(ngModel)]="newLot.achat" name="achat" placeholder="Coût total (0 pour lot éclot)">
+      </div>
+
+      <div class="form-group">
+        <label for="lotRace">Race</label>
+        <select id="lotRace" [(ngModel)]="newLot.idRace" name="idRace">
+          <option value="">-- Sélectionner une race --</option>
+          <option *ngFor="let race of races" value="{{race.idRace}}">{{race.race}}</option>
+        </select>
+      </div>
+
+      <button type="button" class="btn btn-primary" (click)="addLot()">Créer Lot</button>
+    </form>
+  </div>
+</div>

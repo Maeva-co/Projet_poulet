@@ -1,0 +1,134 @@
+.races-container {
+  background: white;
+  padding: var(--spacing-large);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.races-header {
+  margin-bottom: var(--spacing-large);
+  border-bottom: 2px solid var(--primary-blue);
+  padding-bottom: var(--spacing-large);
+}
+
+.races-header h2 {
+  color: var(--primary-blue);
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.races-table-container {
+  margin-bottom: var(--spacing-large);
+  overflow-x: auto;
+}
+
+.races-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: var(--shadow);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.races-table-container table thead {
+  background: var(--primary-blue-gradient);
+  color: var(--text-light);
+}
+
+.races-table-container table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  border: none;
+}
+
+.races-table-container table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color-light);
+}
+
+.races-table-container table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.races-table-container table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.no-data {
+  text-align: center;
+  color: #999;
+  padding: var(--spacing-large);
+  font-style: italic;
+}
+
+.form-container {
+  background: #f8f9fa;
+  padding: var(--spacing-large);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--primary-blue);
+  margin-top: var(--spacing-large);
+}
+
+.form-container h3 {
+  color: var(--primary-blue);
+  margin-bottom: var(--spacing-large);
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: var(--spacing-medium);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(90, 139, 196, 0.1);
+}
+
+button.btn-primary {
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #2c5aa0 0%, #5a8bc4 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: var(--spacing-medium);
+}
+
+button.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+}
+
+button.btn-primary:active {
+  transform: translateY(0);
+}

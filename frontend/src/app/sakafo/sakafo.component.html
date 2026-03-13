@@ -1,0 +1,64 @@
+<div class="sakafo-container">
+  <div class="sakafo-header">
+    <h2>Gestion des Sakafo</h2>
+    <p class="subtitle">Gérez l'alimentation par semaine et par race</p>
+  </div>
+
+  <!-- Tableau des sakafo -->
+  <div class="sakafo-table-container">
+    <table *ngIf="sakafos.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Semaine</th>
+          <th>Race</th>
+          <th>Poids (g)</th>
+          <th>Quantité (g)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sakafo of sakafos">
+          <td>{{sakafo.idSakafo}}</td>
+          <td>S{{sakafo.semaine}}</td>
+          <td>{{getRaceName(sakafo.idRace)}}</td>
+          <td>{{sakafo.poids}}</td>
+          <td>{{sakafo.quantite}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="sakafos.length === 0" class="no-data">Aucun sakafo trouvé</p>
+  </div>
+
+  <!-- Formulaire ajout sakafo -->
+  <div class="form-container">
+    <h3>Ajouter un Sakafo</h3>
+    <p class="form-hint">S0 = première semaine (ne se nourrit pas, quantité = 0)</p>
+    
+    <form>
+      <div class="form-group">
+        <label for="sakafoDemiaine">Numéro de Semaine</label>
+        <input type="number" id="sakafoSemaine" [(ngModel)]="newSakafo.semaine" name="semaine" placeholder="0, 1, 2, etc.">
+      </div>
+
+      <div class="form-group">
+        <label for="sakafoRace">Race</label>
+        <select id="sakafoRace" [(ngModel)]="newSakafo.idRace" name="idRace">
+          <option value="">-- Sélectionner une race --</option>
+          <option *ngFor="let race of races" value="{{race.idRace}}">{{race.race}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="sakafoPoids">Poids (grammes)</label>
+        <input type="number" id="sakafoPoids" [(ngModel)]="newSakafo.poids" name="poids" placeholder="Poids en grammes">
+      </div>
+
+      <div class="form-group">
+        <label for="sakafoQuantite">Quantité Nourriture (grammes)</label>
+        <input type="number" id="sakafoQuantite" [(ngModel)]="newSakafo.quantite" name="quantite" placeholder="Quantité en grammes (0 pour S0)">
+      </div>
+
+      <button type="button" class="btn btn-primary" (click)="addSakafo()">Ajouter Sakafo</button>
+    </form>
+  </div>
+</div>

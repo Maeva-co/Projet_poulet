@@ -1,0 +1,40 @@
+<div class="dashboard-container">
+  <h2>Situation Actuelle de Vos Elevages</h2>
+  <p class="dashboard-subtitle">Consultez ci-dessous l'état global de tous vos lots de poulets</p>
+
+  <div class="filter-section">
+    <label for="dateFilter">Filtrer par date :</label>
+    <input type="date" id="dateFilter" [(ngModel)]="date" (change)="load()" class="date-filter">
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Lot</th>
+        <th>Akoho</th>
+        <th>Achat</th>
+        <th>Sakafo</th>
+        <th>Mort</th>
+        <th>Poids</th>
+        <th>PrixLot</th>
+        <th>Atody</th>
+        <th>PrixAtody</th>
+        <th>Benefice</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of dashboardData">
+        <td>{{d.lot}}</td>
+        <td>{{d.nmbAkoho}}</td>
+        <td>{{d.achat}}</td>
+        <td>{{d.sakafo}}</td>
+        <td>{{d.mort}}</td>
+        <td>{{d.poids}}</td>
+        <td>{{d.prixLot}}</td>
+        <td>{{d.nmbAtody}}</td>
+        <td>{{d.prixAtody}}</td>
+        <td>{{d.benefice}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

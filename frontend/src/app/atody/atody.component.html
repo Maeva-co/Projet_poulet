@@ -1,0 +1,34 @@
+<div class="form-container">
+  <h2>Enregistrer des Oeufs</h2>
+  
+  <form>
+    <div class="form-group">
+      <label for="atodyLot">Sélectionner le Lot</label>
+      <select id="atodyLot" [(ngModel)]="atodyData.idLot" name="idLot">
+        <option value="">-- Choisir un lot --</option>
+        <option *ngFor="let lot of lots" value="{{lot.id}}">Lot {{lot.id}} - {{lot.nmbAkoho}} poulets</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="atodyNmb">Nombre d'Oeufs</label>
+      <input type="number" id="atodyNmb" [(ngModel)]="atodyData.nmb" name="nmb" placeholder="Nombre d'oeufs">
+    </div>
+
+    <div class="form-group">
+      <label for="atodyDate">Date de l'Insertion</label>
+      <input type="date" id="atodyDate" [(ngModel)]="atodyData.date" name="date">
+    </div>
+
+    <div class="form-group">
+      <label for="atodyType">Type d'Oeuf</label>
+      <select id="atodyType" [(ngModel)]="atodyData.type" name="type">
+        <option value="normal">Normal</option>
+        <option value="eclot">Eclos (crée un nouveau lot automatique)</option>
+        <option value="lamokany">Lamokany</option>
+      </select>
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="saveAtody()">Ajouter</button>
+  </form>
+</div>

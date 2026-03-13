@@ -1,0 +1,60 @@
+<div class="races-container">
+  <div class="races-header">
+    <h2>Gestion des Races</h2>
+    <p class="subtitle">Consultez et ajoutez les différentes races de poulets</p>
+  </div>
+
+  <!-- Tableau des races -->
+  <div class="races-table-container">
+    <table *ngIf="races.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom de la Race</th>
+          <th>Prix Sakafo (g)</th>
+          <th>Prix Poulet (g)</th>
+          <th>PU Atody</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let race of races">
+          <td>{{race.idRace}}</td>
+          <td>{{race.race}}</td>
+          <td>{{race.prixSakafo}}</td>
+          <td>{{race.prixPoulet}}</td>
+          <td>{{race.puAtody}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="races.length === 0" class="no-data">Aucune race trouvée</p>
+  </div>
+
+  <!-- Formulaire ajout race -->
+  <div class="form-container">
+    <h3>Ajouter une Nouvelle Race</h3>
+    
+    <form>
+      <div class="form-group">
+        <label for="raceName">Nom de la Race</label>
+        <input type="text" id="raceName" [(ngModel)]="newRace.race" name="race" placeholder="Ex: R1, R2, etc.">
+      </div>
+
+      <div class="form-group">
+        <label for="racePrixSakafo">Prix Sakafo par Gramme (Ar)</label>
+        <input type="number" id="racePrixSakafo" [(ngModel)]="newRace.prixSakafo" name="prixSakafo" placeholder="Prix en Ariary">
+      </div>
+
+      <div class="form-group">
+        <label for="racePrixPoulet">Prix Poulet par Gramme (Ar)</label>
+        <input type="number" id="racePrixPoulet" [(ngModel)]="newRace.prixPoulet" name="prixPoulet" placeholder="Prix en Ariary">
+      </div>
+
+      <div class="form-group">
+        <label for="racePuAtody">PU Atody (Ar)</label>
+        <input type="number" id="racePuAtody" [(ngModel)]="newRace.puAtody" name="puAtody" placeholder="Prix Unitaire Atody">
+      </div>
+
+      <button type="button" class="btn btn-primary" (click)="addRace()">Ajouter Race</button>
+    </form>
+  </div>
+</div>

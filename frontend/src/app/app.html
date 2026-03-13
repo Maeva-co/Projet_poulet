@@ -1,0 +1,28 @@
+<div class="app-layout">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-content">
+      <h1 class="header-title">Elevage De Poulet</h1>
+    </div>
+  </header>
+
+  <!-- SIDEBAR + CONTENT -->
+  <div class="body-container">
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+      <ul class="nav-links">
+        <li><a routerLink="/" class="nav-link">Dashboard</a></li>
+        <li><a routerLink="/lots" class="nav-link">Lots</a></li>
+        <li><a routerLink="/morts" class="nav-link">Morts</a></li>
+        <li><a routerLink="/oeufs" class="nav-link">Oeufs</a></li>
+        <li><a routerLink="/races" class="nav-link">Races</a></li>
+        <li><a routerLink="/sakafo" class="nav-link">Sakafo</a></li>
+      </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

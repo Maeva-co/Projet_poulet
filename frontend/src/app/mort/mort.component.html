@@ -1,0 +1,25 @@
+<div class="form-container">
+  <h2>Enregistrer une Mort</h2>
+  
+  <form>
+    <div class="form-group">
+      <label for="mortLot">Sélectionner le Lot</label>
+      <select id="mortLot" [(ngModel)]="mortData.idLot" name="idLot">
+        <option value="">-- Choisir un lot --</option>
+        <option *ngFor="let lot of lots" value="{{lot.id}}">Lot {{lot.id}} - {{lot.nmbAkoho}} poulets</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="mortNmb">Nombre de Morts</label>
+      <input type="number" id="mortNmb" [(ngModel)]="mortData.nmb" name="nmb" placeholder="Nombre de poulets morts">
+    </div>
+
+    <div class="form-group">
+      <label for="mortDate">Date de l'Insertion</label>
+      <input type="date" id="mortDate" [(ngModel)]="mortData.date" name="date">
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="saveMort()">Ajouter</button>
+  </form>
+</div>

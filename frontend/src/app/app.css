@@ -1,0 +1,162 @@
+/* ============================================
+   APP LAYOUT & STRUCTURE
+   ============================================ */
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.header {
+  background: linear-gradient(135deg, #1a3a66 0%, #2c5aa0 50%, #5a8bc4 100%);
+  color: white;
+  padding: 20px 0;
+  box-shadow: var(--shadow);
+  flex-shrink: 0;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-large);
+}
+
+.header-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================
+   BODY CONTAINER (SIDEBAR + MAIN)
+   ============================================ */
+
+.body-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+
+.sidebar {
+  width: 250px;
+  background: linear-gradient(135deg, #1a3a66 0%, #2c5aa0 50%, #5a8bc4 100%);
+  border-right: 1px solid var(--border-color-light);
+  padding: var(--spacing-medium);
+  overflow-y: auto;
+  flex-shrink: 0;
+  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.05);
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  display: block;
+  padding: 12px 16px;
+  color: white;
+  background: transparent;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  margin-bottom: 8px;
+  border-left: 4px solid transparent;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-left-color: white;
+  color: white;
+}
+
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.25);
+  border-left-color: white;
+  color: white;
+  font-weight: 600;
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+
+.main-content {
+  flex: 1;
+  padding: var(--spacing-large);
+  overflow-y: auto;
+  background-color: #f8f9fa;
+}
+
+/* ============================================
+   FORMS CONTAINER
+   ============================================ */
+
+.form-container {
+  background: white;
+  padding: var(--spacing-large);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  margin: var(--spacing-large) auto;
+  max-width: 500px;
+}
+
+.form-container h2 {
+  color: var(--primary-blue);
+  margin-bottom: var(--spacing-large);
+  text-align: center;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .body-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color-light);
+    padding: var(--spacing-medium);
+    display: flex;
+    overflow-x: auto;
+    overflow-y: visible;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--spacing-medium);
+  }
+
+  .nav-link {
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+
+  .header-title {
+    font-size: 22px;
+  }
+
+  .main-content {
+    padding: var(--spacing-medium);
+  }
+
+  .form-container {
+    max-width: 100%;
+  }
+}
